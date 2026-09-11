@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1020">
+    <meta name="description" content="Chronos Core - modern time, alarm, timer and stopwatch dashboard">
+    <title>Chronos Core — Smart Time Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-icon">◷</div>
+                <div>
+                    <strong>CHRONOS CORE</strong>
+                    <span>SMART TIME DASHBOARD</span>
+                </div>
+            </div>
+
+            <div class="top-actions">
+                <button id="install-btn" class="icon-btn" title="Install app" aria-label="Install app">⇩</button>
+                <button id="theme-toggle" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">☼</button>
+                <button id="format-toggle" class="pill-btn">24H</button>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <section class="hero-card glass">
+                <div class="hero-meta">
+                    <span class="live-dot"></span>
+                    <span id="timezone-label">LOCAL TIME</span>
+                </div>
+
+                <div class="time-wrap">
+                    <h1 id="clock-time">00:00:00</h1>
+                    <span id="clock-ampm">AM</span>
+                </div>
+
+                <div id="clock-date" class="date-string">Loading date...</div>
+
+                <div class="quick-stats">
+                    <div><span>DAY</span><b id="day-progress">0%</b></div>
+                    <div><span>WEEK</span><b id="week-number">W--</b></div>
+                    <div><span>YEAR</span><b id="year-progress">0%</b></div>
+                </div>
+            </section>
+
+
+            <section id="home" class="smart-card glass">
+                <div class="smart-top">
+                    <div><span class="eyebrow">YOUR DAY</span><h2>Smart Holiday Hub</h2></div>
+                    <select id="country-select" aria-label="Select country"><option value="GH">🇬🇭 Ghana</option><option value="INT">🌍 International</option></select>
+                </div>
+                <div class="next-holiday"><div><span class="mini-label">NEXT HOLIDAY</span><h3 id="next-holiday-name">Loading...</h3><p id="next-holiday-date"></p></div><div class="countdown" id="holiday-countdown">—</div></div>
+                <div class="smart-actions"><label class="search-wrap">🔍 <input id="holiday-search" type="search" placeholder="Search holidays..."></label><button id="favorites-filter" class="secondary-btn">♡ Saved</button><button id="reminder-btn" class="secondary-btn">🔔 Reminders</button></div>
+                <div id="search-results" class="search-results"></div>
+            </section>
+
+            <section id="tools" class="tools-grid">
+                <article class="tool-card glass">
+                    <div class="tool-heading">
+                        <div><span class="tool-icon">⏱</span><h2>Stopwatch</h2></div>
+                        <span class="status" id="sw-status">READY</span>
+                    </div>
+                    <div id="stopwatch-display" class="big-counter">00:00.00</div>
+                    <div class="button-row">
+                        <button id="sw-start-btn" class="primary-btn">Start</button>
+                        <button id="sw-lap-btn" class="secondary-btn" disabled>Lap</button>
+                        <button id="sw-reset-btn" class="danger-btn">Reset</button>
+                    </div>
+                    <div class="laps">
+                        <div class="mini-label">LAP HISTORY</div>
+                        <ul id="lap-list"></ul>
+                    </div>
+                </article>
+
+                <article class="tool-card glass">
+                    <div class="tool-heading">
+                        <div><span class="tool-icon">◴</span><h2>Countdown Timer</h2></div>
+                        <span class="status" id="timer-status">READY</span>
+                    </div>
+                    <div id="timer-display" class="big-counter">05:00</div>
+                    <div class="timer-inputs">
+                        <label>MIN <input id="timer-min" type="number" min="0" max="999" value="5"></label>
+                        <label>SEC <input id="timer-sec" type="number" min="0" max="59" value="0"></label>
+                    </div>
+                    <div class="button-row">
+                        <button id="timer-start" class="primary-btn">Start</button>
+                        <button id="timer-reset" class="secondary-btn">Reset</button>
+                    </div>
+                </article>
+
+                <article class="tool-card glass alarm-card">
+                    <div class="tool-heading">
+                        <div><span class="tool-icon">⌁</span><h2>Alarm</h2></div>
+                        <span class="status" id="alarm-status">OFF</span>
+                    </div>
+                    <div class="alarm-setter">
+                        <input id="alarm-time" type="time" aria-label="Alarm time">
+                        <button id="alarm-toggle" class="primary-btn">Set Alarm</button>
+                    </div>
+                    <div class="alarm-info">
+                        <span>Next alarm</span>
+                        <strong id="alarm-label">No alarm scheduled</strong>
+                    </div>
+                    <div class="note">Keep this tab open for browser-based alarms.</div>
+                </article>
+            </section>
+        </main>
+
+
+            <section id="calendar" class="calendar-card glass">
+                <div class="calendar-head">
+                    <div>
+                        <span class="eyebrow">PLAN YOUR YEAR</span>
+                        <h2>Holiday & Event Calendar</h2>
+                        <p>Ghana public holidays plus useful international observances.</p>
+                    </div>
+                    <div class="calendar-controls">
+                        <button id="prev-month" class="secondary-btn" aria-label="Previous month">←</button>
+                        <button id="today-month" class="secondary-btn">Today</button>
+                        <button id="next-month" class="secondary-btn" aria-label="Next month">→</button>
+                    </div>
+                </div>
+                <div class="calendar-title-row">
+                    <button id="prev-year" class="year-arrow">‹</button>
+                    <h3 id="calendar-month-year">January 2026</h3>
+                    <button id="next-year" class="year-arrow">›</button>
+                </div>
+                <div class="calendar-grid" id="calendar-grid"></div>
+                <div class="holiday-panel">
+                    <div class="mini-label">THIS MONTH</div>
+                    <div id="holiday-list" class="holiday-list"></div>
+                </div>
+                <div class="calendar-legend">
+                    <span><i class="dot public"></i> Public holiday</span>
+                    <span><i class="dot observe"></i> Observance</span>
+                    <span><i class="dot today"></i> Today</span>
+                </div>
+            </section>
+
+        <section id="design" class="design-card glass">
+            <div class="design-head"><div><span class="eyebrow">PERSONALIZE</span><h2>Design Your Clock</h2><p>Choose a clock style and your own colors. Your choices are saved automatically.</p></div><button id="reset-design" class="secondary-btn">Reset</button></div>
+            <div class="design-preview"><div id="design-preview-clock" class="preview-clock digital">12:45<span>PM</span></div></div>
+            <div class="design-controls">
+                <div class="control-group"><label>Clock style</label><div class="style-options"><button class="style-option active" data-clock-style="digital">Digital</button><button class="style-option" data-clock-style="minimal">Minimal</button><button class="style-option" data-clock-style="neon">Neon</button><button class="style-option" data-clock-style="classic">Classic</button></div></div>
+                <div class="color-grid"><label>Clock color <input id="clock-color" type="color" value="#6d8cff"></label><label>Background glow <input id="glow-color" type="color" value="#8b5cf6"></label></div>
+                <label class="range-label">Clock size <input id="clock-size" type="range" min="0.75" max="1.35" step="0.05" value="1"><span id="clock-size-value">100%</span></label>
+            </div>
+        </section>
+
+        <nav class="bottom-nav" aria-label="Main navigation"><button data-nav="home">⌂<span>Home</span></button><button data-nav="calendar">▦<span>Calendar</span></button><button data-nav="tools">◷<span>Tools</span></button><button data-nav="design">✦<span>Design</span></button><button data-nav="saved">♡<span>Saved</span></button></nav>
+
+        <footer>
+            <span>Built for focus, timing & productivity.</span>
+            <span id="today-label">—</span>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <audio id="alarm-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+    <div id="holiday-modal" class="modal" aria-hidden="true"><div class="modal-card"><button id="modal-close" class="modal-close">×</button><span class="eyebrow">HOLIDAY DETAILS</span><h2 id="modal-title"></h2><p id="modal-date"></p><p id="modal-description"></p><div class="modal-actions"><button id="modal-favorite" class="primary-btn">♡ Save</button><button id="modal-calendar" class="secondary-btn">＋ Add to Calendar</button></div></div></div>
+    <script src="scripts.js"></script>
+</body>
+</html>
